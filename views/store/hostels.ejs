@@ -1,0 +1,42 @@
+<%- include('../partials/head', { PageTitle, cssFile }) %>
+<body>
+  <%- include('../partials/nav') %>
+
+  <h1 style="text-align:center; color:#f44336; margin-top:30px;">
+    Welcome to Hostel Listings
+  </h1>
+
+  <div class="hostels-container">
+    <% if(!registeredHomes || registeredHomes.length === 0) { %>
+      <p style="text-align:center;">No hostels added yet.</p>
+    <% } else { %>
+      <% registeredHomes.forEach((home) => { %>
+        <div class="hostel-card">
+          <img 
+            src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
+            alt="<%= home.homeName %>"
+          >
+
+          <h3><%= home.homeName %></h3>
+          <p><strong>Address:</strong> <%= home.address %></p>
+          <p><strong>City:</strong> <%= home.city %></p>
+          <p><strong>Price:</strong> ₹<%= home.price %>/night</p>
+
+          <a class="book-btn" href="/hostel-detail/<%= home._id %>">
+            View Details
+          </a>
+
+          <!-- ✅ DELETE FORM -->
+          <form action="/delete-hostel" method="POST">
+            <input type="hidden" name="hostelId" value="<%= home._id %>">
+            <button type="submit" class="delete-btn">
+              Delete
+            </button>
+          </form>
+
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</body>
+</html>
