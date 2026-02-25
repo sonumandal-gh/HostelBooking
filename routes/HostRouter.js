@@ -9,7 +9,7 @@ hostRouter.get('/Add-home', hostController.getAddHome);
 // POST Submit Home
 hostRouter.post('/submit-home', hostController.postAddHome);
 
-hostRouter.get("/host-hostels-list",hostController.getHostHostels);
+hostRouter.get("/hostels",hostController.getHostHostels);
 
 hostRouter.post("/delete-hostel", hostController.deleteHostel );
 

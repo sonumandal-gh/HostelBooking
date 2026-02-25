@@ -30,7 +30,7 @@ module.exports = class Home {
       .next();
   }
 
-  /* 🔥 DELETE METHOD */
+  /*  DELETE METHOD */
   static deleteById(homeId) {
     const db = getDb();
     return db

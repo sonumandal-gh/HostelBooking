@@ -1,5 +1,6 @@
 const Home = require("../models/home");
 const Favourite = require("../models/Favourites");
+const { getDb } = require("../utils/database");
 
 // Home Page
 exports.getHome = (req, res) => {
@@ -55,47 +56,4 @@ exports.getSuccess = (req, res) => {
     PageTitle: "Success",
     cssFile: "submit-home"
   });
-};
-
-exports.getFavouriteList = (req, res) => {
-  Favourite.getFavourites()
-    .then(favourites => {
-      // Get array of favourite home IDs
-      const favouriteIds = favourites.map(fav => fav.houseId.toString());
-
-      // Get all homes
-      return Home.fetchAll().then(registeredHomes => {
-        const favouriteHomes = registeredHomes.filter(home =>
-          favouriteIds.includes(home._id.toString())
-        );
-
-        res.render("store/favourite-list", {
-          favouriteHomes,
-          PageTitle: "My Favourites",
-          cssFile: "style"
-        });
-      });
-    })
-    .catch(err => console.log("Error fetching favourites: ", err));
-};
-
-// POST Add Home to Favourites
-exports.postAddToFavourite = (req, res) => {
-  const homeId = req.body.homeId; // Must match input name in EJS
-  const fav = new Favourite(homeId);
-
-  fav.save()
-    .then(() => console.log("✅ Home added to favourites"))
-    .catch(err => console.log("Error adding to favourites: ", err))
-    .finally(() => res.redirect("/favourites")); // Redirect after POST
-};
-
-// POST Remove Home from Favourites
-exports.postRemoveFromFavourite = (req, res) => {
-  const homeId = req.params.homeId;
-
-  Favourite.deleteById(homeId)
-    .then(() => console.log("🔥 Home removed from favourites"))
-    .catch(err => console.log("Error removing from favourites: ", err))
-    .finally(() => res.redirect("/favourites")); // Redirect after removal
 };

@@ -13,7 +13,7 @@ exports.getAddHome = (req, res) => {
 exports.getHostHostels = (req, res) => {
   Home.fetchAll()
     .then((registeredHomes) => {
-      res.render("host/host-hostels-list", {
+      res.render("hostels", {
         registeredHomes,
         PageTitle: "Host Homes List",
         cssFile: "HostHostels"
@@ -34,7 +34,7 @@ exports.postAddHome = (req, res) => {
     .then(() => {
       console.log("✅ Home Saved Successfully");
 
-      // 🔥 NEVER render after POST
+      // NEVER render after POST
       res.redirect("/submit-home");
     })
     .catch(err => console.log(err));
@@ -57,7 +57,7 @@ exports.deleteHostel = (req, res) => {
 
   Home.deleteById(hostelId)
     .then(() => {
-      console.log("🔥 Hostel Deleted");
+      console.log(" Hostel Deleted");
 
       res.redirect("hostels");
     })
