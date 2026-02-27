@@ -18,6 +18,14 @@ class Favourite {
       .find({ userId: new ObjectId(userId) })
       .toArray();
   }
+
+  static deleteFavourite(homeId, userId) {
+    const db = getDb();
+    return db.collection("favourites").deleteOne({
+      homeId: new ObjectId(homeId),
+      userId: new ObjectId(userId)
+    });
+  }
 }
 
 module.exports = Favourite;

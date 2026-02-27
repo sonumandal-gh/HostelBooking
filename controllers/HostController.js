@@ -13,7 +13,7 @@ exports.getAddHome = (req, res) => {
 exports.getHostHostels = (req, res) => {
   Home.fetchAll()
     .then((registeredHomes) => {
-      res.render("hostels", {
+      res.render("host/hostels", {
         registeredHomes,
         PageTitle: "Host Homes List",
         cssFile: "HostHostels"

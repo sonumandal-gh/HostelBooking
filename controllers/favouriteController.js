@@ -1,7 +1,8 @@
 const Favourite = require("../models/Favourites");
 const Home = require("../models/home");
 
-// Add to Favourite
+
+// 🔥 ADD TO FAVOURITE
 exports.postAddToFavourite = (req, res) => {
 
   const homeId = req.body.homeId;
@@ -15,15 +16,18 @@ exports.postAddToFavourite = (req, res) => {
       res.redirect("/favourites");
     })
     .catch(err => {
-      console.log("Error adding to favourites:", err);
+      console.log(err);
       res.redirect("/hostels");
     });
 };
 
 
+// 🔥 GET FAVOURITE LIST
 exports.getFavouriteList = (req, res) => {
 
-  Favourite.getFavourites()
+  const userId = req.session.user._id;
+
+  Favourite.getFavourites(userId)
     .then(favourites => {
 
       const favouriteIds = favourites.map(fav =>
@@ -48,5 +52,25 @@ exports.getFavouriteList = (req, res) => {
     .catch(err => {
       console.log(err);
       res.redirect("/hostels");
+    });
+};
+
+
+//  DELETE FAVOURITE 
+exports.postDeleteFavourite = (req, res) => {
+
+  const homeId = req.params.homeId;
+  const userId = req.session.user._id;
+
+  console.log("Deleting:", homeId, userId); // debug
+
+  Favourite.deleteFavourite(homeId, userId)
+    .then(result => {
+      console.log("Deleted Count:", result.deletedCount);
+      res.redirect("/favourites");
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect("/favourites");
     });
 };

@@ -31,9 +31,21 @@
             <strong>Price:</strong> ₹<%= home.price %>/night
           </p>
 
+          <div class="card-buttons">
+
+            <a href="/hostel-detail/<%= home._id %>" class="details-btn">
+              View Details
+            </a>
+          
+            <a href="/hostels/<%= home._id %>" class="book-now-btn">
+              Book Now
+            </a>
+          
+          </div>
+          
           <form action="/favourites/delete/<%= home._id %>" method="POST">
             <button type="submit" class="delete-btn">
-              Remove from Favourites
+              Remove
             </button>
           </form>
 
