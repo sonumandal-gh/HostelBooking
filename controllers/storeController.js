@@ -4,12 +4,14 @@ const { getDb } = require("../utils/database");
 
 // Home Page
 exports.getHome = (req, res) => {
-  Home.fetchAll()
+  console.log("Session value: ", req.session);;
+  Home.find()
     .then(homes => {
       res.render("store/home", {
         registeredHomes: homes,
         PageTitle: "Home",
-        cssFile: "home"
+        cssFile: "home",
+        isLoggedIn: req.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -18,12 +20,13 @@ exports.getHome = (req, res) => {
 
 // Hostels Page
 exports.getHostels = (req, res) => {
-  Home.fetchAll()
+  Home.find()
     .then(homes => {
       res.render("host/hostels", {
         registeredHomes: homes,
         PageTitle: "Hostels",
-        cssFile: "hostels"
+        cssFile: "hostels",
+        isLoggedIn: req.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -42,7 +45,8 @@ exports.getHostelsDetails = (req, res) => {
       res.render("store/hostel-detail", {
         hostels: home,
         PageTitle: "Hostel Detail",
-        cssFile: "hostel-detail"
+        cssFile: "hostel-detail",
+        isLoggedIn: req.isLoggedIn
       });
 
     })
@@ -54,6 +58,7 @@ exports.getHostelsDetails = (req, res) => {
 exports.getSuccess = (req, res) => {
   res.render("submit-home", {   // make sure file exists
     PageTitle: "Success",
-    cssFile: "submit-home"
+    cssFile: "submit-home",
+    isLoggedIn: req.isLoggedIn
   });
 };

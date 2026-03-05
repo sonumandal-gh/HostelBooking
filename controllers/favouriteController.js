@@ -8,7 +8,10 @@ exports.postAddToFavourite = (req, res) => {
   const homeId = req.body.homeId;
   const userId = req.session.user._id;
 
-  const fav = new Favourite(homeId, userId);
+  const fav = new Favourite({
+    homeId: homeId,
+    userId: userId
+  });
 
   fav.save()
     .then(() => {
@@ -22,30 +25,27 @@ exports.postAddToFavourite = (req, res) => {
 };
 
 
-// 🔥 GET FAVOURITE LIST
+
+//  GET FAVOURITE LIST
 exports.getFavouriteList = (req, res) => {
 
   const userId = req.session.user._id;
 
-  Favourite.getFavourites(userId)
+  Favourite.find({ userId: userId })
     .then(favourites => {
 
-      const favouriteIds = favourites.map(fav =>
-        fav.homeId.toString()
-      );
+      const favouriteIds = favourites.map(fav => fav.homeId);
 
-      return Home.fetchAll().then(registeredHomes => {
+      return Home.find({ _id: { $in: favouriteIds } });
 
-        const favouriteHomes = registeredHomes.filter(home =>
-          favouriteIds.includes(home._id.toString())
-        );
+    })
+    .then(favouriteHomes => {
 
-        res.render("store/favourites", {
-          favouriteHomes,
-          PageTitle: "My Favourites",
-          cssFile: "favourite"
-        });
-
+      res.render("store/favourites", {
+        favouriteHomes,
+        PageTitle: "My Favourites",
+        cssFile: "favourite",
+        isLoggedIn: req.isLoggedIn
       });
 
     })
@@ -56,17 +56,18 @@ exports.getFavouriteList = (req, res) => {
 };
 
 
-//  DELETE FAVOURITE 
+
+//  DELETE FAVOURITE
 exports.postDeleteFavourite = (req, res) => {
 
   const homeId = req.params.homeId;
   const userId = req.session.user._id;
 
-  console.log("Deleting:", homeId, userId); // debug
-
-  Favourite.deleteFavourite(homeId, userId)
-    .then(result => {
-      console.log("Deleted Count:", result.deletedCount);
+  Favourite.deleteOne({
+    homeId: homeId,
+    userId: userId
+  })
+    .then(() => {
       res.redirect("/favourites");
     })
     .catch(err => {

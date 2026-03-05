@@ -4,62 +4,76 @@ const Home = require("../models/home");
 exports.getAddHome = (req, res) => {
   res.render("host/Add-Home", {
     PageTitle: "Add Home",
-    cssFile: "Add-Home"
+    cssFile: "Add-Home",
+    isLoggedIn: req.isLoggedIn
   });
 };
 
 
 // GET Host Hostels List
 exports.getHostHostels = (req, res) => {
-  Home.fetchAll()
+
+  Home.find()
     .then((registeredHomes) => {
+
       res.render("host/hostels", {
         registeredHomes,
         PageTitle: "Host Homes List",
-        cssFile: "HostHostels"
+        cssFile: "HostHostels",
+        isLoggedIn: req.isLoggedIn
       });
+
     })
     .catch(err => console.log(err));
 };
 
 
-//  POST Add Home (VERY IMPORTANT FLOW)
+// POST Add Home
 exports.postAddHome = (req, res) => {
 
   const { homeName, address, city, price, image } = req.body;
 
-  const home = new Home(homeName, address, city, price, image);
+  const home = new Home({
+    homeName,
+    address,
+    city,
+    price,
+    image
+  });
 
   home.save()
     .then(() => {
-      console.log("✅ Home Saved Successfully");
-
-      // NEVER render after POST
+      console.log("Home Saved Successfully");
       res.redirect("/submit-home");
     })
     .catch(err => console.log(err));
 };
 
 
-//  SUCCESS PAGE
+// SUCCESS PAGE
 exports.getSuccess = (req, res) => {
+
   res.render("submit-home", {
     PageTitle: "Home Submitted",
-    cssFile: "submit-home"
+    cssFile: "submit-home",
+    isLoggedIn: req.isLoggedIn
   });
+
 };
 
 
-//  DELETE HOSTEL
+// DELETE HOSTEL
 exports.deleteHostel = (req, res) => {
 
   const hostelId = req.body.hostelId;
 
-  Home.deleteById(hostelId)
+  Home.findByIdAndDelete(hostelId)
     .then(() => {
-      console.log(" Hostel Deleted");
 
-      res.redirect("hostels");
+      console.log("Hostel Deleted");
+
+      res.redirect("/host/hostels");
+
     })
     .catch(err => console.log(err));
 };
