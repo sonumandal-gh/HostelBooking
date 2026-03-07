@@ -2,13 +2,27 @@ const express = require("express");
 const favouriteRouter = express.Router();
 
 const favouriteController = require("../controllers/favouriteController");
+const isAuth = require("../middleware/isAuth");
 
-// GET - Favourite List
-favouriteRouter.get("/favourites", favouriteController.getFavouriteList);
+// GET FAVOURITES
+favouriteRouter.get(
+  "/favourites",
+  isAuth,
+  favouriteController.getFavouriteList
+);
 
-// POST - Add to Favourite
-favouriteRouter.post("/add-to-favourite", favouriteController.postAddToFavourite);
+// ADD TO FAVOURITE
+favouriteRouter.post(
+  "/add-to-favourite",
+  isAuth,
+  favouriteController.postAddToFavourite
+);
 
-favouriteRouter.post("/favourites/delete/:homeId", favouriteController.postDeleteFavourite);
+// DELETE FAVOURITE
+favouriteRouter.post(
+  "/favourites/delete/:homeId",
+  isAuth,
+  favouriteController.postDeleteFavourite
+);
 
 module.exports = favouriteRouter;

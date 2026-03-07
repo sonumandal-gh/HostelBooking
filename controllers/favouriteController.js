@@ -2,31 +2,30 @@ const Favourite = require("../models/Favourites");
 const Home = require("../models/home");
 
 
-// 🔥 ADD TO FAVOURITE
+// ADD TO FAVOURITE
 exports.postAddToFavourite = (req, res) => {
 
   const homeId = req.body.homeId;
   const userId = req.session.user._id;
 
-  const fav = new Favourite({
+  Favourite.create({
     homeId: homeId,
     userId: userId
+  })
+  .then(() => {
+    console.log("Added to favourites");
+    res.redirect("/favourites");
+  })
+  .catch(err => {
+    console.log(err);
+    res.redirect("/hostels");
   });
 
-  fav.save()
-    .then(() => {
-      console.log("Home added to favourites");
-      res.redirect("/favourites");
-    })
-    .catch(err => {
-      console.log(err);
-      res.redirect("/hostels");
-    });
 };
 
 
 
-//  GET FAVOURITE LIST
+// GET FAVOURITES
 exports.getFavouriteList = (req, res) => {
 
   const userId = req.session.user._id;
@@ -34,7 +33,7 @@ exports.getFavouriteList = (req, res) => {
   Favourite.find({ userId: userId })
     .then(favourites => {
 
-      const favouriteIds = favourites.map(fav => fav.homeId);
+      const favouriteIds = favourites.map(f => f.homeId);
 
       return Home.find({ _id: { $in: favouriteIds } });
 
@@ -45,7 +44,7 @@ exports.getFavouriteList = (req, res) => {
         favouriteHomes,
         PageTitle: "My Favourites",
         cssFile: "favourite",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn
       });
 
     })
@@ -53,11 +52,12 @@ exports.getFavouriteList = (req, res) => {
       console.log(err);
       res.redirect("/hostels");
     });
+
 };
 
 
 
-//  DELETE FAVOURITE
+// DELETE FAVOURITE
 exports.postDeleteFavourite = (req, res) => {
 
   const homeId = req.params.homeId;
@@ -67,11 +67,12 @@ exports.postDeleteFavourite = (req, res) => {
     homeId: homeId,
     userId: userId
   })
-    .then(() => {
-      res.redirect("/favourites");
-    })
-    .catch(err => {
-      console.log(err);
-      res.redirect("/favourites");
-    });
+  .then(() => {
+    res.redirect("/favourites");
+  })
+  .catch(err => {
+    console.log(err);
+    res.redirect("/favourites");
+  });
+
 };
