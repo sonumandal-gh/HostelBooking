@@ -5,7 +5,8 @@ exports.getAddHome = (req, res) => {
   res.render("host/Add-Home", {
     PageTitle: "Add Home",
     cssFile: "Add-Home",
-    isLoggedIn: req.isLoggedIn
+    isLoggedIn: req.isLoggedIn,
+    user: req.session.user
   });
 };
 
@@ -20,7 +21,8 @@ exports.getHostHostels = (req, res) => {
         registeredHomes,
         PageTitle: "Host Homes List",
         cssFile: "HostHostels",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user
       });
 
     })
@@ -56,7 +58,8 @@ exports.getSuccess = (req, res) => {
   res.render("submit-home", {
     PageTitle: "Home Submitted",
     cssFile: "submit-home",
-    isLoggedIn: req.isLoggedIn
+    isLoggedIn: req.isLoggedIn,
+    user: req.session.user
   });
 
 };

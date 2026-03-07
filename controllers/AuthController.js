@@ -1,18 +1,24 @@
 const { validationResult } = require("express-validator");
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
+
 
 // LOGIN PAGE
-exports.getLogin = (req , res, next) => {
+exports.getLogin = (req , res) => {
+
   res.render("Auth/login", {
     PageTitle: "Login Page",
     cssFile: "login",
     isLoggedIn: req.session.isLoggedIn || false,
     errorMessage: null
   });
+
 };
 
+
 // SIGNUP PAGE
-exports.getSignUp = (req, res, next) => {
+exports.getSignUp = (req, res) => {
+
   res.render("Auth/signup", {
     PageTitle: "Sign-Up Page",
     cssFile: "signUp",
@@ -20,12 +26,15 @@ exports.getSignUp = (req, res, next) => {
     errorMessages: [],
     oldInput: {}
   });
+
 };
 
-// SIGNUP POST
-exports.postSignUp = async (req ,res ,next) => {
 
-  const { fullName, email ,password , confirmPassword, role } = req.body;
+
+// SIGNUP POST
+exports.postSignUp = async (req ,res) => {
+
+  const { fullName, email ,password , role } = req.body;
 
   const errors = validationResult(req);
 
@@ -46,10 +55,26 @@ exports.postSignUp = async (req ,res ,next) => {
 
   try {
 
+    // EMAIL CHECK
+    const existingUser = await User.findOne({ email });
+
+    if(existingUser){
+      return res.status(422).render("Auth/signup",{
+        PageTitle:"Sign Up",
+        cssFile:"signUp",
+        isLoggedIn:false,
+        errorMessages:[{msg:"Email already exists"}],
+        oldInput:{fullName,email,password,role}
+      });
+    }
+
+    // HASH PASSWORD
+    const hashedPassword = await bcrypt.hash(password,12);
+
     const user = new User({
       fullName,
       email,
-      password,
+      password:hashedPassword,
       role
     });
 
@@ -59,14 +84,17 @@ exports.postSignUp = async (req ,res ,next) => {
 
     res.redirect("/login");
 
-  } catch (err) {
+  } catch(err){
     console.log(err);
+    res.redirect("/signup");
   }
+
 };
 
 
+
 // LOGIN POST
-exports.postLogin = async (req, res ,next) => {
+exports.postLogin = async (req, res) => {
 
   const { email , password } = req.body;
 
@@ -81,7 +109,9 @@ exports.postLogin = async (req, res ,next) => {
     });
   }
 
-  if(user.password !== password){
+  const isMatch = await bcrypt.compare(password , user.password);
+
+  if(!isMatch){
     return res.render("Auth/login", {
       PageTitle: "Login Page",
       cssFile: "login",
@@ -94,11 +124,13 @@ exports.postLogin = async (req, res ,next) => {
   req.session.user = user;
 
   res.redirect('/');
+
 };
 
 
+
 // LOGOUT
-exports.postLogout = (req, res ,next) => {
+exports.postLogout = (req, res) => {
 
   req.session.destroy(() => {
     res.redirect('/login');

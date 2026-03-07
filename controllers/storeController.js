@@ -11,7 +11,8 @@ exports.getHome = (req, res) => {
         registeredHomes: homes,
         PageTitle: "Home",
         cssFile: "home",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user
       });
     })
     .catch(err => console.log(err));
@@ -26,7 +27,8 @@ exports.getHostels = (req, res) => {
         registeredHomes: homes,
         PageTitle: "Hostels",
         cssFile: "hostels",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user
       });
     })
     .catch(err => console.log(err));
@@ -46,7 +48,8 @@ exports.getHostelsDetails = (req, res) => {
         hostels: home,
         PageTitle: "Hostel Detail",
         cssFile: "hostel-detail",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user
       });
 
     })
@@ -59,6 +62,7 @@ exports.getSuccess = (req, res) => {
   res.render("submit-home", {   // make sure file exists
     PageTitle: "Success",
     cssFile: "submit-home",
-    isLoggedIn: req.isLoggedIn
+    isLoggedIn: req.isLoggedIn,
+    user: req.session.user
   });
 };

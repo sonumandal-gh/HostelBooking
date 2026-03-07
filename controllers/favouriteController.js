@@ -44,7 +44,8 @@ exports.getFavouriteList = (req, res) => {
         favouriteHomes,
         PageTitle: "My Favourites",
         cssFile: "favourite",
-        isLoggedIn: req.session.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user
       });
 
     })
