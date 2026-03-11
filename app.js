@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -61,11 +62,8 @@ app.use((req, res) => {
 });
 
 // Server
-mongoConnect()
-.then(() => {
-  console.log("MongoDB Connected");
-  app.listen(3000);
-})
-.catch(err => {
-  console.log(err);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running");
 });

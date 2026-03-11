@@ -10,7 +10,10 @@ exports.getLogin = (req , res) => {
     PageTitle: "Login Page",
     cssFile: "login",
     isLoggedIn: req.session.isLoggedIn || false,
-    errorMessage: null
+    errorMessage: null,
+    oldInput: {
+      email: ""
+    }
   });
 
 };
@@ -24,7 +27,8 @@ exports.getSignUp = (req, res) => {
     cssFile: "signUp",
     isLoggedIn: false,
     errorMessages: [],
-    oldInput: {}
+    oldInput: {},
+    user: {}
   });
 
 };
@@ -64,7 +68,8 @@ exports.postSignUp = async (req ,res) => {
         cssFile:"signUp",
         isLoggedIn:false,
         errorMessages:[{msg:"Email already exists"}],
-        oldInput:{fullName,email,password,role}
+        oldInput:{fullName,email,password,role},
+        user: {}
       });
     }
 
@@ -105,7 +110,8 @@ exports.postLogin = async (req, res) => {
       PageTitle: "Login Page",
       cssFile: "login",
       isLoggedIn: false,
-      errorMessage: "User does not exist"
+      errorMessage: "User does not exist",
+      oldInput: { email }
     });
   }
 
@@ -116,7 +122,8 @@ exports.postLogin = async (req, res) => {
       PageTitle: "Login Page",
       cssFile: "login",
       isLoggedIn: false,
-      errorMessage: "Incorrect password"
+      errorMessage: "Incorrect password",
+      oldInput: { email }
     });
   }
 

@@ -1,32 +1,52 @@
 <%- include('../partials/head', { PageTitle, cssFile }) %>
+
 <body>
-  <%- include('../partials/nav') %>
 
-  <h1 style="text-align:center; color:#f44336; margin-top:30px;">
-    Welcome to Hostel Listings
-  </h1>
+<%- include('../partials/nav') %>
 
-  <div class="hostels-container">
-    <% if(!registeredHomes || registeredHomes.length === 0) { %>
-      <p style="text-align:center;">No hostels added yet.</p>
-    <% } else { %>
-      <% registeredHomes.forEach((home) => { %>
-        <div class="hostel-card">
-          <img 
-            src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
-            alt="<%= home.homeName %>"
-          >
+<h1 class="page-title">
+  Welcome to Hostel Listings
+</h1>
 
-          <h3><%= home.homeName %></h3>
-          <p><strong>Address:</strong> <%= home.address %></p>
-          <p><strong>City:</strong> <%= home.city %></p>
-          <p><strong>Price:</strong> ₹<%= home.price %>/night</p>
+<div class="hostels-container">
+
+  <% if(!registeredHomes || registeredHomes.length === 0) { %>
+
+    <p class="no-hostel">No hostels added yet.</p>
+
+  <% } else { %>
+
+    <% registeredHomes.forEach((home) => { %>
+
+      <div class="hostel-card">
+
+        <img 
+          src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
+          alt="<%= home.homeName %>"
+        >
+
+        <h3><%= home.homeName %></h3>
+
+        <p><strong>Address:</strong> <%= home.address %></p>
+        <p><strong>City:</strong> <%= home.city %></p>
+        <p><strong>Price:</strong> ₹<%= home.price %>/night</p>
+
+        <div class="card-buttons">
+
+        <% if(user && user.role === "guest") { %>
 
           <a class="book-btn" href="/hostel-detail/<%= home._id %>">
             View Details
           </a>
 
-          <!-- ✅ DELETE FORM -->
+        <% } %>
+
+        <% if(user && user.role === "host") { %>
+
+          <a class="edit-btn" href="/edit-hostel/<%= home._id %>">
+            Edit
+          </a>
+
           <form action="/delete-hostel" method="POST">
             <input type="hidden" name="hostelId" value="<%= home._id %>">
             <button type="submit" class="delete-btn">
@@ -34,9 +54,17 @@
             </button>
           </form>
 
+        <% } %>
+
         </div>
-      <% }) %>
-    <% } %>
-  </div>
+
+      </div>
+
+    <% }) %>
+
+  <% } %>
+
+</div>
+
 </body>
 </html>

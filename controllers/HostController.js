@@ -20,7 +20,7 @@ exports.getHostHostels = (req, res) => {
       res.render("host/hostels", {
         registeredHomes,
         PageTitle: "Host Homes List",
-        cssFile: "HostHostels",
+        cssFile: "hostels",
         isLoggedIn: req.isLoggedIn,
         user: req.session.user
       });

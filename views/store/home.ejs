@@ -2,13 +2,54 @@
 
 <body>
 
-  <%- include('../partials/nav') %>
+<%- include('../partials/nav') %>
 
-  <section class="hero">
-    <h1>Welcome to HostelBooking</h1>
-    <p>Find safe, affordable & comfortable hostels easily</p>
-    <a href="/hostels" class="btn">Explore Hostels</a>
-  </section>
+<section class="hero">
+
+  <div class="hero-content">
+    <h1>Find Your Perfect Hostel</h1>
+    <p>Affordable • Safe • Comfortable stays anywhere</p>
+
+    <!-- Search Box -->
+    <form action="/hostels" method="GET" class="search-box">
+
+      <input type="text" name="location" placeholder="Where are you going?" required>
+
+      <input type="date" name="checkin">
+
+      <input type="date" name="checkout">
+
+      <button type="submit">Search</button>
+
+    </form>
+
+    <% if(!isLoggedIn) { %>
+      <a href="/login" class="login-btn">Login to Book</a>
+    <% } %>
+
+  </div>
+
+</section>
+
+
+<section class="features">
+
+  <div class="feature-card">
+    <h3>Best Prices</h3>
+    <p>Compare hostels and find the best deals.</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>Verified Hostels</h3>
+    <p>Safe and trusted places to stay.</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>Easy Booking</h3>
+    <p>Book your stay in seconds.</p>
+  </div>
+
+</section>
 
 </body>
 </html>

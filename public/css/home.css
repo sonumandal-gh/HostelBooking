@@ -1,78 +1,201 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: "Poppins", sans-serif;
 }
 
-body, html {
-  width: 100%;
-  height: 100%;
-  font-family: Arial, sans-serif;
+body{
+  font-family:'Poppins', Arial, sans-serif;
+  background:#f5f7fa;
+  color:#333;
 }
+
 
 /* HERO SECTION */
-.hero {
-  min-height: calc(100vh - 70px);
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.55),
-      rgba(0, 0, 0, 0.55)
+
+.hero{
+height:90vh;
+background:
+    linear-gradient(
+      rgba(0,0,0,0.6),
+      rgba(0,0,0,0.6)
     ),
     url("https://images.unsplash.com/photo-1522708323590-d24dbb6b0267")
-      center / cover no-repeat;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-  color: #fff;
-  padding: 20px;
+    center/cover no-repeat;
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
 }
 
-/* Heading */
-.hero h1 {
-  font-size: 52px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
 }
 
-/* Paragraph */
-.hero p {
-  font-size: 18px;
-  max-width: 600px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  opacity: 0.95;
+.hero-content{
+position:relative;
+z-index:2;
+color:white;
+max-width:800px;
 }
 
-/* Button */
-.hero .btn {
-  display: inline-block;
-  padding: 14px 36px;
-  background: #ffcc00;
-  color: #222;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  transition: all 0.3s ease;
+.hero h1{
+font-size:52px;
+font-weight:700;
+margin-bottom:10px;
 }
 
-.hero .btn:hover {
-  background: #ffd633;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+.hero p{
+font-size:20px;
+margin-bottom:30px;
+opacity:0.9;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 38px;
+
+/* SEARCH BOX */
+
+.search-box{
+display:flex;
+gap:10px;
+background:white;
+padding:12px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.search-box input{
+padding:12px 15px;
+border:1px solid #ddd;
+border-radius:6px;
+font-size:15px;
+outline:none;
+min-width:170px;
+}
+
+.search-box input:focus{
+border-color:#0071c2;
+}
+
+.search-box button{
+background:#0071c2;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.search-box button:hover{
+background:#005999;
+}
+
+
+/* LOGIN BUTTON */
+
+.login-btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 28px;
+background:#ff6b00;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:500;
+transition:0.3s;
+}
+
+.login-btn:hover{
+background:#e65c00;
+}
+
+
+/* FEATURES SECTION */
+
+.features{
+  padding:80px 8%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  
+  background:
+  linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.1)),
+  url("https://images.unsplash.com/photo-1522708323590-d24dbb6b0267")
+  center/cover no-repeat;
   }
 
-  .hero p {
-    font-size: 16px;
-  }
+.feature-card{
+background:#ddd;
+padding:40px 25px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:all 0.3s ease;
+position:relative;
+overflow:hidden;
+}
+
+.feature-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+height:4px;
+width:100%;
+background:#0071c2;
+}
+
+.feature-card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+.feature-card h3{
+font-size:22px;
+margin-bottom:10px;
+color:#0071c2;
+font-weight:600;
+}
+
+.feature-card p{
+font-size:15px;
+color:#666;
+line-height:1.6;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:36px;
+}
+
+.search-box{
+flex-direction:column;
+}
+
+.search-box input{
+width:100%;
+}
+
+.search-box button{
+width:100%;
+}
+
 }
