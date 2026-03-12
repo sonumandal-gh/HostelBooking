@@ -97,3 +97,31 @@ body{
   background:white;
   color:#243b55;
 }
+
+/* MOBILE VIEW */
+
+@media (max-width:768px){
+
+  .navbar{
+    padding:0 20px;
+  }
+
+  .nav-links{
+    gap:15px;
+  }
+
+  .nav-links a{
+    font-size:14px;
+  }
+
+  .auth-links{
+    gap:10px;
+  }
+
+  .auth-links a,
+  .auth-links button{
+    padding:5px 10px;
+    font-size:13px;
+  }
+
+}
