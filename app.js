@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
+const multer = require("multer");
 
 const storeRouter = require('./routes/storeRouter');
 const hostRouter = require('./routes/HostRouter');
@@ -17,6 +18,19 @@ app.set('views', 'views');
 
 // Body Parser
 app.use(express.urlencoded({ extended: true }));
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.locals.upload = upload;
 
 // Session Middleware
 app.use(session({

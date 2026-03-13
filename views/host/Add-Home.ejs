@@ -5,7 +5,9 @@
 
   <div class="form-container">
     <h1>Add a New Home</h1>
-    <form action="/submit-home" method="POST">
+
+    <form action="/submit-home" method="POST" enctype="multipart/form-data">
+
         <label for="homeName">Home Name:</label>
         <input type="text" id="homeName" name="homeName" placeholder="Enter home name" required>
 
@@ -18,11 +20,12 @@
         <label for="price">Price (per month):</label>
         <input type="number" id="price" name="price" placeholder="Enter price" required>
 
-        <label for="image">Home Image URL:</label>
-        <input type="file" id="image" name="image" accept="image/*" placeholder="Enter image URL" required>
+        <label for="image">Home Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
 
         <button type="submit" class="btn">Add Home</button>
+
     </form>
   </div>
 
-</body>  
+</body>

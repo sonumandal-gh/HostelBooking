@@ -21,9 +21,9 @@
       <div class="hostel-card">
 
         <img 
-          src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
-          alt="<%= home.homeName %>"
-        >
+        src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+        alt="<%= home.homeName %>"
+      >
 
         <h3><%= home.homeName %></h3>
 
