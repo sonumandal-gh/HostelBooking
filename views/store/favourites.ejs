@@ -9,8 +9,24 @@
 
     <% if (!favouriteHomes || favouriteHomes.length === 0) { %>
 
-      <p class="no-favourites">No favourites added yet.</p>
-
+      <div class="fav-empty">
+    
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+          alt="No favourites"
+          class="fav-icon"
+        >
+    
+        <h2>No Favourite Hostels Yet</h2>
+    
+        <p>You haven't added any hostels to your favourites.</p>
+    
+        <a href="/hostels" class="browse-btn">
+          Browse Hostels
+        </a>
+    
+      </div>
+    
     <% } else { %>
 
       <% favouriteHomes.forEach(home => { %>
