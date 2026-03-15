@@ -41,7 +41,7 @@ exports.getFavouriteList = (req, res) => {
     .then(favouriteHomes => {
 
       res.render("store/favourites", {
-        favouriteHomes,
+        home: home,
         PageTitle: "My Favourites",
         cssFile: "favourite",
         isLoggedIn: req.session.isLoggedIn,

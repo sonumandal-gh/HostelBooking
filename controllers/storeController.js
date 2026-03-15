@@ -45,7 +45,7 @@ exports.getHostelsDetails = (req, res) => {
       }
 
       res.render("store/hostel-detail", {
-        hostels: home,
+        home: home,
         PageTitle: "Hostel Detail",
         cssFile: "hostel-detail",
         isLoggedIn: req.isLoggedIn,

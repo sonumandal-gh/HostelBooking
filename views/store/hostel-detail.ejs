@@ -7,50 +7,49 @@
     <div class="details-card">
       
       <img 
-        src="<%= hostels.image || 'https://via.placeholder.com/600x350' %>"
-        alt="<%= hostels.homeName %>"
-        class="details-img"
+        src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+        alt="<%= home.homeName %>"
       >
 
       <div class="details-info">
         <h1>
-          <%= hostels.homeName %> 
-          ⭐ <%= hostels.rating || "4.0" %>
+          <%= home.homeName %> 
+          ⭐ <%= home.rating || "4.0" %>
         </h1>
 
         <p class="price">
-          ₹<%= hostels.price %> / month
+          ₹<%= home.price %> / month
         </p>
 
         <p><strong>📍 Address:</strong> 
-          <%= hostels.address %>
+          <%= home.address %>
         </p>
 
         <p><strong>🏙 City:</strong> 
-          <%= hostels.city %>
+          <%= home.city %>
         </p>
 
         <!-- NEW DETAILS -->
         <p>
           <strong>📝 Description:</strong><br>
-          <%= hostels.description || "No description available for this hostel." %>
+          <%= home.description || "No description available for this hostel." %>
         </p>
 
         <p>
           <strong>✅ Facilities:</strong><br>
-          <%= hostels.facilities || "WiFi, Food, Laundry, Parking" %>
+          <%= home.facilities || "WiFi, Food, Laundry, Parking" %>
         </p>
 
         <p>
           <strong>👤 Owner:</strong> 
-          <%= hostels.owner || "Not Provided" %>
+          <%= home.owner || "Not Provided" %>
         </p>
 
         <p>
           <strong>📞 Contact:</strong> 
-          <% if(hostels.contact){ %>
-            <a href="tel:<%= hostels.contact %>">
-              <%= hostels.contact %>
+          <% if(home.contact){ %>
+            <a href="tel:<%= home.contact %>">
+              <%= home.contact %>
             </a>
           <% } else { %>
             Not Available
@@ -64,12 +63,11 @@
           </a>
 
           <form action="/add-to-favourite" method="POST" style="display:inline;">
-            <input type="hidden" name="homeId" value="<%= hostels._id %>">
+            <input type="hidden" name="homeId" value="<%= home._id %>">
             <button type="submit" class="favorite-btn">
               Add to Favorite
             </button>
           </form>
-          
 
           <a href="#" class="book-btn">
             Book Now

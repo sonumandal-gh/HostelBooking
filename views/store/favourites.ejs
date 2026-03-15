@@ -12,10 +12,9 @@
         <div class="hostel-card">
 
           <img 
-            src="<%= home.image ? home.image : 'https://via.placeholder.com/300x200' %>" 
-            alt="<%= home.name %>" 
-            class="hostel-img"
-          >
+  src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+  alt="<%= home.homeName %>"
+>
 
           <h3 class="hostel-name"><%= home.name %></h3>
 
