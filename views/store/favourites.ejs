@@ -1,22 +1,30 @@
 <%- include('../partials/head', { PageTitle, cssFile }) %>
 <body>
+
   <%- include('../partials/nav') %>
 
   <h1 class="page-title">Your Favourite Hostels</h1>
 
   <div class="hostels-container">
+
     <% if (!favouriteHomes || favouriteHomes.length === 0) { %>
+
       <p class="no-favourites">No favourites added yet.</p>
+
     <% } else { %>
+
       <% favouriteHomes.forEach(home => { %>
+
         <div class="hostel-card">
 
           <img 
-  src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
-  alt="<%= home.homeName %>"
->
+            src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+            alt="<%= home.homeName %>"
+          >
 
-          <h3 class="hostel-name"><%= home.name %></h3>
+          <h3 class="hostel-name">
+            <%= home.homeName %>
+          </h3>
 
           <p class="hostel-address">
             <strong>Address:</strong> <%= home.address %>
@@ -27,7 +35,7 @@
           </p>
 
           <p class="hostel-price">
-            <strong>Price:</strong> ₹<%= home.price %>/night
+            <strong>Price:</strong> ₹<%= home.price %>/month
           </p>
 
           <div class="card-buttons">
@@ -35,13 +43,13 @@
             <a href="/hostel-detail/<%= home._id %>" class="details-btn">
               View Details
             </a>
-          
-            <a href="/hostels/<%= home._id %>" class="book-now-btn">
+
+            <a href="/hostel-detail/<%= home._id %>" class="book-now-btn">
               Book Now
             </a>
-          
+
           </div>
-          
+
           <form action="/favourites/delete/<%= home._id %>" method="POST">
             <button type="submit" class="delete-btn">
               Remove
@@ -49,8 +57,11 @@
           </form>
 
         </div>
+
       <% }) %>
+
     <% } %>
+
   </div>
 
   <div style="text-align:center; margin-top:20px;">

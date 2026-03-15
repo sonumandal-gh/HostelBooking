@@ -1,6 +1,7 @@
 /* 🌐 Global */
 body{
   margin:0;
+  margin-top:70px;
   font-family: "Segoe UI", Tahoma, sans-serif;
   background:#f4f6f8;
 }
