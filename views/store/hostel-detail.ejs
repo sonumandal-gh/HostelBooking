@@ -1,38 +1,42 @@
 <%- include('../partials/head', { PageTitle, cssFile }) %>
 <body>
-  <%- include('../partials/nav') %>
 
-  <div class="details-container">
+<%- include('../partials/nav') %>
 
-    <div class="details-card">
-      
+<div class="details-container">
+
+  <div class="details-card">
+
+    <!-- IMAGE -->
+    <div class="details-image">
       <img 
-        src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+        src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/400x300' %>" 
         alt="<%= home.homeName %>"
       >
+    </div>
 
-      <div class="details-info">
-        <h1>
-          <%= home.homeName %> 
-          ⭐ <%= home.rating || "4.0" %>
-        </h1>
+    <!-- INFO -->
+    <div class="details-info">
 
-        <p class="price">
-          ₹<%= home.price %> / month
-        </p>
+      <h1>
+        <%= home.homeName %> 
+        <span class="rating">⭐ <%= home.rating || "4.0" %></span>
+      </h1>
 
-        <p><strong>📍 Address:</strong> 
-          <%= home.address %>
-        </p>
+      <p class="price">
+        ₹<%= home.price %> / month
+      </p>
 
-        <p><strong>🏙 City:</strong> 
-          <%= home.city %>
-        </p>
+      <!-- INFO BOX -->
+      <div class="info-box">
 
-        <!-- NEW DETAILS -->
+        <p><strong>📍 Address:</strong> <%= home.address %></p>
+
+        <p><strong>🏙 City:</strong> <%= home.city %></p>
+
         <p>
           <strong>📝 Description:</strong><br>
-          <%= home.description || "No description available for this hostel." %>
+          <%= home.description || "No description available." %>
         </p>
 
         <p>
@@ -48,36 +52,35 @@
         <p>
           <strong>📞 Contact:</strong> 
           <% if(home.contact){ %>
-            <a href="tel:<%= home.contact %>">
-              <%= home.contact %>
-            </a>
+            <a href="tel:<%= home.contact %>"><%= home.contact %></a>
           <% } else { %>
             Not Available
           <% } %>
         </p>
 
-        <!-- BUTTONS -->
-        <div style="margin-top:25px;">
-          <a href="/hostels" class="back-btn">
-             Back
-          </a>
+      </div>
 
-          <form action="/add-to-favourite" method="POST" style="display:inline;">
-            <input type="hidden" name="homeId" value="<%= home._id %>">
-            <button type="submit" class="favorite-btn">
-              Add to Favorite
-            </button>
-          </form>
+      <!-- BUTTONS -->
+      <div class="btn-group">
 
-          <a href="#" class="book-btn">
-            Book Now
-          </a>
-        </div>
+        <a href="/hostels" class="btn back">Back</a>
+
+        <form action="/add-to-favourite" method="POST">
+          <input type="hidden" name="homeId" value="<%= home._id %>">
+          <button type="submit" class="btn fav">
+            Add to Favorite
+          </button>
+        </form>
+
+        <a href="#" class="btn book">Book Now</a>
 
       </div>
 
     </div>
 
   </div>
+
+</div>
+
 </body>
 </html>

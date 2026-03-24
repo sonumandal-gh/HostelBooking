@@ -1,181 +1,118 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI', sans-serif;
-}
-
-/* Body */
-body{
-  background: linear-gradient(135deg,#eef2f3,#dfe9f3);
-}
-
-/* Container */
 .details-container{
+  padding:30px;
   display:flex;
   justify-content:center;
-  align-items:center;
-  padding:100px 20px 40px 20px; /* navbar space */
 }
 
-/* Card */
+/* CARD */
+
 .details-card{
+  display:flex;
+  gap:30px;
+  max-width:1100px;
   width:100%;
-  max-width:900px;
-  background:#fff;
-  border-radius:14px;
+
+  background:white;
+  border-radius:12px;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,0.15);
-  transition:0.3s;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
-.details-card:hover{
-  transform:translateY(-4px);
+/* IMAGE */
+
+.details-image{
+  flex:1;
 }
 
-/* Image */
-.details-img{
+.details-image img{
   width:100%;
-  height:350px;
+  height:100%;
   object-fit:cover;
-  object-position:center;
 }
 
-/* Info */
+/* INFO */
+
 .details-info{
-  padding:30px;
+  flex:1;
+  padding:20px;
 }
 
-/* Hostel Name */
 .details-info h1{
-  font-size:30px;
   margin-bottom:10px;
-  color:#333;
 }
 
-/* Price */
+.rating{
+  font-size:16px;
+  color:#fbc02d;
+}
+
+/* PRICE */
+
 .price{
-  font-size:26px;
-  color:#2e7d32;
+  font-size:18px;
   font-weight:bold;
+  color:#1e88e5;
+  margin-bottom:15px;
+}
+
+/* INFO BOX */
+
+.info-box{
+  background:#f7f7f7;
+  padding:15px;
+  border-radius:8px;
+  line-height:1.8;
   margin-bottom:20px;
 }
 
-/* Text */
-.details-info p{
-  font-size:17px;
-  color:#555;
-  margin:10px 0;
-  line-height:1.6;
-}
+/* BUTTONS */
 
-/* Contact Link */
-.details-info a{
-  color:#3498db;
-  font-weight:600;
-  text-decoration:none;
-}
-
-.details-info a:hover{
-  text-decoration:underline;
-}
-
-/* Buttons Container */
-.details-info div{
-  margin-top:30px;
+.btn-group{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
 }
 
-/* Back Button */
-.back-btn{
-  background:#f44336;
-  color:white;
-  padding:12px 24px;
-  border-radius:8px;
+.btn{
+  padding:10px 15px;
+  border-radius:6px;
   text-decoration:none;
-  font-size:15px;
-}
-
-/* Book Button */
-.book-btn{
-  background:#2e7d32;
-  color:white;
-  padding:12px 24px;
-  border-radius:8px;
-  text-decoration:none;
-  font-size:15px;
-}
-
-/* Favourite Button */
-.favorite-btn{
-  background:#f1c40f;
-  color:white;
-  padding:12px 24px;
-  border-radius:8px;
   border:none;
   cursor:pointer;
-  font-size:15px;
+  color:white;
+  font-size:14px;
 }
 
-/* Hover Effects */
-.back-btn:hover{
-  background:#d32f2f;
+/* COLORS */
+
+.back{
+  background:#e53935;
 }
 
-.book-btn:hover{
-  background:#1b5e20;
+.fav{
+  background:#fbc02d;
+  color:black;
 }
 
-.favorite-btn:hover{
-  background:#d4ac0d;
+.book{
+  background:#43a047;
 }
 
-/* Facility Box */
-.facility-box{
-  background:#f1f8e9;
-  padding:15px;
-  border-radius:10px;
-  margin-top:10px;
+.btn:hover{
+  opacity:0.9;
 }
 
-/* Mobile Responsive */
+/* MOBILE */
+
 @media(max-width:768px){
 
-  .details-container{
-    padding:80px 15px 30px 15px;
-  }
-
-  .details-img{
-    height:220px;
-  }
-
-  .details-info{
-    padding:20px;
-  }
-
-  .details-info h1{
-    font-size:22px;
-  }
-
-  .price{
-    font-size:20px;
-  }
-
-  .details-info p{
-    font-size:15px;
-  }
-
-  .details-info div{
+  .details-card{
     flex-direction:column;
   }
 
-  .back-btn,
-  .book-btn,
-  .favorite-btn{
-    width:100%;
-    text-align:center;
+  .details-image img{
+    height:220px;
   }
 
 }

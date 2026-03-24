@@ -5,9 +5,12 @@
 }
 
 body{
-  margin-top:70px;   
-  overflow-x:hidden; 
+  margin-top:70px;
+  font-family:sans-serif;
+  overflow-x:hidden;
 }
+
+/* NAVBAR */
 
 .navbar{
   height:70px;
@@ -21,9 +24,7 @@ body{
   background:linear-gradient(90deg,#141e30,#243b55);
   color:white;
 
-  box-shadow:0 4px 15px rgba(0,0,0,0.15);
-
-  position:fixed;   
+  position:fixed;
   top:0;
   left:0;
   z-index:1000;
@@ -34,10 +35,9 @@ body{
 .logo{
   font-size:22px;
   font-weight:bold;
-  letter-spacing:1px;
 }
 
-/* nav LINKS */
+/* NAV LINKS */
 
 .nav-links{
   display:flex;
@@ -45,8 +45,6 @@ body{
   gap:25px;
   list-style:none;
 }
-
-/* LINKS */
 
 .nav-links a{
   text-decoration:none;
@@ -59,7 +57,7 @@ body{
   color:#ffcc70;
 }
 
-/* AUTH LINKS */
+/* AUTH */
 
 .auth-links{
   display:flex;
@@ -67,38 +65,55 @@ body{
   gap:15px;
 }
 
-/* LOGIN SIGNUP BUTTON STYLE */
-
-.auth-links a{
-  padding:7px 14px;
-  border-radius:6px;
-  border:1px solid white;
-  transition:0.3s;
-}
-
-.auth-links a:hover{
-  background:white;
-  color:#243b55;
-}
-
-/* LOGOUT BUTTON */
-
+.auth-links a,
 .auth-links button{
-  padding:7px 14px;
+  padding:6px 12px;
   border-radius:6px;
   border:1px solid white;
   background:transparent;
   color:white;
   cursor:pointer;
-  transition:0.3s;
 }
 
+.auth-links a:hover,
 .auth-links button:hover{
   background:white;
   color:#243b55;
 }
 
-/* MOBILE VIEW */
+/* HAMBURGER */
+
+.menu-toggle{
+  display:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* OVERLAY */
+
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(2px);
+
+  opacity:0;
+  visibility:hidden;
+  transition:0.3s;
+
+  z-index:900;
+}
+
+.overlay.active{
+  opacity:1;
+  visibility:visible;
+}
+
+/* MOBILE */
 
 @media (max-width:768px){
 
@@ -106,22 +121,52 @@ body{
     padding:0 20px;
   }
 
+  .menu-toggle{
+    display:block;
+    z-index:1100;
+  }
+
   .nav-links{
-    gap:15px;
+    position:fixed;
+    top:0;
+    right:-100%;
+
+    height:100vh;
+    width:80%;
+
+    background:linear-gradient(180deg,#1e2f45,#243b55);
+
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:30px;
+
+    transition:0.4s ease-in-out;
+    box-shadow:-5px 0 25px rgba(0,0,0,0.3);
+  }
+
+  .nav-links.active{
+    right:0;
   }
 
   .nav-links a{
-    font-size:14px;
+    font-size:18px;
+    font-weight:500;
   }
 
   .auth-links{
-    gap:10px;
+    flex-direction:column;
+    gap:15px;
+    margin-top:10px;
   }
 
   .auth-links a,
   .auth-links button{
-    padding:5px 10px;
-    font-size:13px;
+    width:150px;
+    text-align:center;
+    padding:10px;
+    border-radius:8px;
   }
 
 }

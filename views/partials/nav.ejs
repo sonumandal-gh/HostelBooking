@@ -1,40 +1,67 @@
-<nav class="navbar">
-  <div class="logo">HostelBooking</div>
+<body>
 
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-
-    <% if(isLoggedIn){ %>
-
-      <!-- Sabko hostels dikhega -->
-      <li><a href="/hostels">Hostels</a></li>
-
-      <!-- Guest Links -->
-      <% if(user && user.role === 'guest') { %>
-        <li><a href="/favourites">Favorite</a></li>
-        <li><a href="/Book-Now">Book Now</a></li>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">HostelBooking</div>
+  
+    <!-- HAMBURGER -->
+    <div class="menu-toggle" id="menuToggle">
+      ☰
+    </div>
+  
+    <ul class="nav-links" id="navLinks">
+      
+      <li><a href="/">Home</a></li>
+  
+      <% if(isLoggedIn){ %>
+  
+        <li><a href="/hostels">Hostels</a></li>
+  
+        <% if(user && user.role === 'guest') { %>
+          <li><a href="/favourites">Favorite</a></li>
+          <li><a href="/Book-Now">Book Now</a></li>
+        <% } %>
+  
+        <% if(user && user.role === 'host') { %>
+          <li><a href="/Add-Home">Add Home</a></li>
+        <% } %>
+  
       <% } %>
-
-      <!-- Host Links -->
-      <% if(user && user.role === 'host') { %>
-        <li><a href="/Add-Home">Add Home</a></li>
-      <% } %>
-
-    <% } %>
-
-    <li class="auth-links">
-
-      <% if(!isLoggedIn){ %>
-        <a href="/login">Login</a>
-        <a href="/signup">SignUp</a>
-      <% } else { %>
-
-        <form action="/logout" method="POST" style="display:inline;">
-          <button type="submit">Logout</button>
-        </form>
-
-      <% } %>
-
-    </li>
-  </ul>
-</nav>
+  
+      <li class="auth-links">
+  
+        <% if(!isLoggedIn){ %>
+          <a href="/login">Login</a>
+          <a href="/signup">SignUp</a>
+        <% } else { %>
+          <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+          </form>
+        <% } %>
+  
+      </li>
+  
+    </ul>
+  </nav>
+  
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
+  
+  <script>
+    const toggle = document.getElementById("menuToggle");
+    const nav = document.getElementById("navLinks");
+    const overlay = document.getElementById("overlay");
+  
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      overlay.classList.toggle("active");
+    });
+  
+    overlay.addEventListener("click", () => {
+      nav.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+  </script>
+  
+  </body>
+  </html>
