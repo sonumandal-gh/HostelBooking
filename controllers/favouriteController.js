@@ -13,11 +13,11 @@ exports.postAddToFavourite = (req, res) => {
     userId: userId
   })
   .then(() => {
-    res.status(201).json({ message: "Added to favourites" });
+    res.redirect("/favourites");
   })
   .catch(err => {
     console.log(err);
-    res.status(500).json({ error: "Failed to add to favourites" });
+    res.redirect("/hostels");
   });
 
 };
@@ -61,16 +61,16 @@ exports.postDeleteFavourite = (req, res) => {
   const homeId = req.params.homeId;
   const userId = req.session.user._id;
 
-  Favourite.deleteOne({
+  Favourite.deleteMany({
     homeId: homeId,
     userId: userId
   })
   .then(() => {
-    res.status(200).json({ message: "Favourite deleted successfully" });
+    res.redirect("/favourites");
   })
   .catch(err => {
     console.log(err);
-    res.status(500).json({ error: "Failed to delete favourite" });
+    res.redirect("/favourites");
   });
 
 };
