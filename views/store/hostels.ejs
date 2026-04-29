@@ -1,0 +1,50 @@
+<%- include('../partials/head') %>
+
+<body>
+
+<%- include('../partials/nav') %>
+
+<h1 class="page-title">
+  Available Hostels
+</h1>
+
+<div class="hostels-container">
+
+  <% if(!homes || homes.length === 0) { %>
+
+    <p class="no-hostel">No hostels added yet.</p>
+
+  <% } else { %>
+
+    <% homes.forEach((home) => { %>
+
+      <div class="hostel-card">
+
+        <div class="price-tag">₹<%= home.price %>/night</div>
+        <img 
+          src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
+          alt="<%= home.homeName %>"
+        >
+
+        <h3><%= home.homeName %></h3>
+
+        <p><strong>Location:</strong> <%= home.address %>, <%= home.city %></p>
+
+        <div class="card-buttons">
+
+          <a class="book-btn" href="/hostel-detail/<%= home._id %>">
+            View Details
+          </a>
+
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  <% } %>
+
+</div>
+
+</body>
+</html>

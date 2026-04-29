@@ -4,13 +4,13 @@
   <%- include('../partials/nav') %>
 
   <div class="container">
-      <div class="signup-box">
+      <div class="signup-box glass-panel">
           <h2>Create Account</h2>
 
           <form action="/signup" method="POST">
 
             <!-- Error Messages -->
-            <% if (errorMessages && errorMessages.length > 0) { %>
+            <% if (typeof errorMessages !== 'undefined' && errorMessages && errorMessages.length > 0) { %>
               <div class="error-box">
                 <% errorMessages.forEach(error => { %>
                     <p><%= error.msg %></p>
@@ -18,27 +18,27 @@
               </div>
             <% } %>
 
-              <div class="input-group">
+              <div class="form-group">
                   <label>Full Name</label>
                   <input 
                     type="text"
                     name="fullName"
                     placeholder="Enter your full name"
-                    value="<%= oldInput && oldInput.fullName ? oldInput.fullName : '' %>"
+                    value="<%= typeof oldInput !== 'undefined' && oldInput.fullName ? oldInput.fullName : '' %>"
                     required>
               </div>
 
-              <div class="input-group">
+              <div class="form-group">
                   <label>Email</label>
                   <input
                     type="email"
                     name="email"
                     placeholder="Enter your email"
-                    value="<%= oldInput && oldInput.email ? oldInput.email : '' %>"
+                    value="<%= typeof oldInput !== 'undefined' && oldInput.email ? oldInput.email : '' %>"
                     required>
               </div>
 
-              <div class="input-group">
+              <div class="form-group">
                   <label>Password</label>
                   <input
                     type="password"
@@ -47,7 +47,7 @@
                     required>
               </div>
 
-              <div class="input-group">
+              <div class="form-group">
                   <label>Confirm Password</label>
                   <input
                     type="password"
@@ -57,7 +57,7 @@
               </div>
 
               <!-- Account Type -->
-              <div class="input-group">
+              <div class="form-group">
                   <label>Account Type</label>
 
                   <div class="radio-group">
@@ -66,7 +66,7 @@
                             type="radio"
                             name="role"
                             value="guest"
-                            <%= !oldInput.role || oldInput.role === "guest" ? "checked" : "" %>
+                            <%= typeof oldInput === 'undefined' || !oldInput.role || oldInput.role === "guest" ? "checked" : "" %>
                             required>
                           Guest
                       </label>
@@ -76,14 +76,14 @@
                             type="radio"
                             name="role"
                             value="host"
-                            <%= oldInput.role === "host" ? "checked" : "" %>
+                            <%= typeof oldInput !== 'undefined' && oldInput.role === "host" ? "checked" : "" %>
                             required>
                           Host
                       </label>
                   </div>
               </div>
 
-              <button type="submit">Sign Up</button>
+              <button type="submit" class="btn-primary" style="width: 100%;">Sign Up</button>
 
               <p class="login-link">
                   Already have an account? <a href="/login">Login</a>

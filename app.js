@@ -11,24 +11,28 @@ const mongoConnect = require('./utils/database');
 
 const app = express();
 
-// View Engine
+// View Engine Setup
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-// Body Parser
+app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
 // Session Middleware
 app.use(session({
-  secret: "Sonu Mandal Js",
+  secret: process.env.SESSION_SECRET || "Sonu Mandal Js",
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
+  cookie: { 
+    maxAge: 1000 * 60 * 60, // 1 hour
+    httpOnly: true,
+  } 
 }));
 
 // Login Check Middleware
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
+  req.user = req.session.user || null;
   console.log("Session check middleware:", req.isLoggedIn);
   next();
 });
@@ -38,32 +42,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use(storeRouter);
+app.use(AuthRouter);
 
-// Host routes protection
-app.use("/host", (req, res, next) => {
+// Host routes protection middleware
+const isAuth = (req, res, next) => {
   if (req.isLoggedIn) {
     next();
   } else {
-    res.redirect("/login");
+    res.redirect('/login');
   }
-});
+};
 
-app.use(hostRouter);
-app.use(favouriteRouter);
-app.use(AuthRouter);
+app.use('/host', isAuth, hostRouter);
+app.use(isAuth, favouriteRouter); 
 
-// 404 Page
+// 404 Route
 app.use((req, res) => {
-  res.status(404).render('404', {
-    PageTitle: '404 | Page Not Found',
-    cssFile: '404',
-    isLoggedIn: req.isLoggedIn
+  res.status(404).render('404', { 
+    PageTitle: "404 - Not Found", 
+    isLoggedIn: req.isLoggedIn, 
+    cssFile: '404' 
   });
 });
 
-// Server
-const PORT = process.env.PORT || 3000;
+// Connect to MongoDB FIRST, then start server
+const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log("Server running");
-});
+mongoConnect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error("❌ Failed to connect to MongoDB. Server not started.", err.message);
+    process.exit(1);
+  });

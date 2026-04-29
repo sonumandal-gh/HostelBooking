@@ -1,17 +1,18 @@
-<%- include('../partials/head', { PageTitle, cssFile }) %>
+<%- include('../partials/head') %>
 <body>
   <%- include('../partials/nav') %>
 
-  <h1 style="text-align:center; color:#f44336; margin-top:30px;">
-    Welcome to Hostel Listings
+  <h1 class="page-title">
+    Your Managed Hostels
   </h1>
 
   <div class="hostels-container">
-    <% if(!registeredHomes || registeredHomes.length === 0) { %>
+    <% if(!homes || homes.length === 0) { %>
       <p style="text-align:center;">No hostels added yet.</p>
     <% } else { %>
-      <% registeredHomes.forEach((home) => { %>
+      <% homes.forEach((home) => { %>
         <div class="hostel-card">
+          <div class="price-tag">₹<%= home.price %>/night</div>
           <img 
             src="<%= home.image || 'https://via.placeholder.com/300x200' %>" 
             alt="<%= home.homeName %>"
@@ -19,15 +20,16 @@
 
           <h3><%= home.homeName %></h3>
 
-          <p><strong>Address:</strong> <%= home.address %></p>
+          <p><strong>Location:</strong> <%= home.address %>, <%= home.city %></p>
 
-          <p><strong>City:</strong> <%= home.city %></p>
-
-          <p><strong>Price:</strong> ₹<%= home.price %>/night</p>
-
-         <a href="/detail">
-          <button class="book-btn">VIEW DETAILS</button>
-         </a>
+          <div class="card-buttons">
+            <a href="/hostel-detail/<%= home._id %>" class="book-btn">View Details</a>
+            
+            <form action="/host/delete-hostel" method="POST" style="display: inline; width: 100%;">
+              <input type="hidden" name="hostelId" value="<%= home._id %>">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </div>
         </div>
       <% }) %>
     <% } %>

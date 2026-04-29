@@ -3,66 +3,80 @@ const Favourite = require("../models/Favourites");
 const { getDb } = require("../utils/database");
 
 // Home Page
-exports.getHome = (req, res) => {
-  console.log("Session value: ", req.session);;
-  Home.find()
-    .then(homes => {
-      res.render("store/home", {
-        registeredHomes: homes,
-        PageTitle: "Home",
-        cssFile: "home",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user
-      });
-    })
-    .catch(err => console.log(err));
+exports.getHome = async (req, res) => {
+  try {
+    const homes = await Home.find();
+    res.render('store/home', {
+      homes: homes,
+      PageTitle: "HostelBooking - Best Hostels",
+      cssFile: 'home',
+      isLoggedIn: req.isLoggedIn
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
 
 
 // Hostels Page
-exports.getHostels = (req, res) => {
-  Home.find()
-    .then(homes => {
-      res.render("host/hostels", {
-        registeredHomes: homes,
-        PageTitle: "Hostels",
-        cssFile: "hostels",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user
-      });
-    })
-    .catch(err => console.log(err));
+exports.getHostels = async (req, res) => {
+  try {
+    const homes = await Home.find();
+    res.render('store/hostels', {
+      homes: homes,
+      PageTitle: "All Hostels",
+      cssFile: 'hostels',
+      isLoggedIn: req.isLoggedIn
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
 
 
 // Hostel Detail
-exports.getHostelsDetails = (req, res) => {
-  Home.findById(req.params.hostelsId)
-    .then(home => {
-
-      if (!home) {
-        return res.redirect("/hostels");
-      }
-
-      res.render("store/hostel-detail", {
-        hostels: home,
-        PageTitle: "Hostel Detail",
-        cssFile: "hostel-detail",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user
+exports.getHostelsDetails = async (req, res) => {
+  try {
+    const home = await Home.findById(req.params.hostelsId);
+    if (!home) {
+      return res.status(404).render('404', { 
+        PageTitle: "Hostel Not Found", 
+        isLoggedIn: req.isLoggedIn, 
+        cssFile: '404' 
       });
-
-    })
-    .catch(err => console.log(err));
+    }
+    res.render('store/hostel-detail', {
+      hostels: home,
+      PageTitle: home.homeName,
+      cssFile: 'hostel-detail',
+      isLoggedIn: req.isLoggedIn
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
 
 
-//  SUCCESS PAGE (VERY IMPORTANT)
+// Success Page
 exports.getSuccess = (req, res) => {
-  res.render("submit-home", {   // make sure file exists
+  res.render('submit-home', {
     PageTitle: "Success",
-    cssFile: "submit-home",
-    isLoggedIn: req.isLoggedIn,
-    user: req.session.user
+    cssFile: 'submit-home',
+    isLoggedIn: req.isLoggedIn
   });
 };

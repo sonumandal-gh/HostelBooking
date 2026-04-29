@@ -13,12 +13,11 @@ exports.postAddToFavourite = (req, res) => {
     userId: userId
   })
   .then(() => {
-    console.log("Added to favourites");
-    res.redirect("/favourites");
+    res.status(201).json({ message: "Added to favourites" });
   })
   .catch(err => {
     console.log(err);
-    res.redirect("/hostels");
+    res.status(500).json({ error: "Failed to add to favourites" });
   });
 
 };
@@ -39,19 +38,11 @@ exports.getFavouriteList = (req, res) => {
 
     })
     .then(favouriteHomes => {
-
-      res.render("store/favourites", {
-        favouriteHomes,
-        PageTitle: "My Favourites",
-        cssFile: "favourite",
-        isLoggedIn: req.session.isLoggedIn,
-        user: req.session.user
-      });
-
+      res.status(200).json(favouriteHomes);
     })
     .catch(err => {
       console.log(err);
-      res.redirect("/hostels");
+      res.status(500).json({ error: "Failed to fetch favourites" });
     });
 
 };
@@ -69,11 +60,11 @@ exports.postDeleteFavourite = (req, res) => {
     userId: userId
   })
   .then(() => {
-    res.redirect("/favourites");
+    res.status(200).json({ message: "Favourite deleted successfully" });
   })
   .catch(err => {
     console.log(err);
-    res.redirect("/favourites");
+    res.status(500).json({ error: "Failed to delete favourite" });
   });
 
 };

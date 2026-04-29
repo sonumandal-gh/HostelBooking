@@ -1,132 +1,22 @@
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Arial', sans-serif;
-    background: #f0f2f5;
-    color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
 }
 
-/* navbar styling */
-.navbar {
-    background-color: #1e1e2f;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    position: fixed; /* stays on top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.navbar .logo {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.navbar .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.navbar .nav-links li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.navbar .nav-links li a:hover {
-    color: #4CAF50;
-}
-
-/* Form Container attached below navbar */
 .form-container {
-    position: relative; /* attach below navbar */
-    top: 0;
-    margin: 80px auto 50px auto; /* 80px = navbar height */
-    width: 500px;
-    background: linear-gradient(145deg, #ffffff, #e0f7fa); /* subtle gradient */
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    text-align: center;
-    transition: transform 0.3s;
+  width: 100%;
+  max-width: 500px;
+  margin: 8rem auto 4rem auto; /* Offset for sticky nav */
+  padding: 3rem;
 }
 
-/* Hover effect on form */
-.form-container:hover {
-    transform: translateY(-5px);
-}
-
-/* Form Title */
 .form-container h1 {
-    color: #1e1e2f;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-/* Labels */
-.form-container label {
-    display: block;
-    margin-bottom: 0px;
-    font-weight: bold;
-    color: #555;
-    text-align: left;
-}
-
-/* Inputs & Textarea */
-.form-container input,
-.form-container textarea {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-
-.form-container input:focus,
-.form-container textarea:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 8px rgba(76,175,80,0.4);
-    outline: none;
-}
-
-/* Submit Button */
-.form-container button {
-    width: 100%;
-    padding: 16px;
-    background: #4CAF50;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-}
-
-.form-container button:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
-
-/* Make it responsive */
-@media (max-width: 600px) {
-    .form-container {
-        width: 90%;
-        padding: 30px 20px;
-    }
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 800;
 }

@@ -1,40 +1,33 @@
 <nav class="navbar">
-  <div class="logo">HostelBooking</div>
+  <div class="logo"><a href="/">HostelBooking</a></div>
 
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
+    <li><a href="/hostels">Hostels</a></li>
 
     <% if(isLoggedIn){ %>
-
-      <!-- Sabko hostels dikhega -->
-      <li><a href="/hostels">Hostels</a></li>
-
       <!-- Guest Links -->
       <% if(user && user.role === 'guest') { %>
-        <li><a href="/favourites">Favorite</a></li>
-        <li><a href="/Book-Now">Book Now</a></li>
+        <li><a href="/favourites">Favorites</a></li>
       <% } %>
 
       <!-- Host Links -->
       <% if(user && user.role === 'host') { %>
-        <li><a href="/Add-Home">Add Home</a></li>
+        <li><a href="/host/Add-home">Add Hostel</a></li>
+        <li><a href="/host/hostels">My Listings</a></li>
       <% } %>
-
     <% } %>
 
     <li class="auth-links">
-
       <% if(!isLoggedIn){ %>
-        <a href="/login">Login</a>
-        <a href="/signup">SignUp</a>
+        <a href="/login" class="nav-btn">Login</a>
+        <a href="/signup" class="nav-btn">SignUp</a>
       <% } else { %>
-
+        <span class="user-email"><%= user.email %></span>
         <form action="/logout" method="POST" style="display:inline;">
-          <button type="submit">Logout</button>
+          <button type="submit" class="logout-btn">Logout</button>
         </form>
-
       <% } %>
-
     </li>
   </ul>
 </nav>

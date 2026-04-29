@@ -2,37 +2,38 @@ const Home = require("../models/home");
 
 // GET Add Home Page
 exports.getAddHome = (req, res) => {
-  res.render("host/Add-Home", {
-    PageTitle: "Add Home",
-    cssFile: "Add-Home",
+  res.render('host/Add-Home', {
+    PageTitle: "Add Hostel",
+    cssFile: 'Add-Home',
     isLoggedIn: req.isLoggedIn,
-    user: req.session.user
+    editing: false
   });
 };
 
 
 // GET Host Hostels List
-exports.getHostHostels = (req, res) => {
-
-  Home.find()
-    .then((registeredHomes) => {
-
-      res.render("host/hostels", {
-        registeredHomes,
-        PageTitle: "Host Homes List",
-        cssFile: "hostels",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user
-      });
-
-    })
-    .catch(err => console.log(err));
+exports.getHostHostels = async (req, res) => {
+  try {
+    const registeredHomes = await Home.find();
+    res.render('host/host-hostels-list', {
+      homes: registeredHomes,
+      PageTitle: "Your Hostels",
+      cssFile: 'hostels', // reusing hostels.css
+      isLoggedIn: req.isLoggedIn
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
 
 
 // POST Add Home
-exports.postAddHome = (req, res) => {
-
+exports.postAddHome = async (req, res) => {
   const { homeName, address, city, price, image } = req.body;
 
   const home = new Home({
@@ -43,40 +44,33 @@ exports.postAddHome = (req, res) => {
     image
   });
 
-  home.save()
-    .then(() => {
-      console.log("Home Saved Successfully");
-      res.redirect("/submit-home");
-    })
-    .catch(err => console.log(err));
-};
-
-
-// SUCCESS PAGE
-exports.getSuccess = (req, res) => {
-
-  res.render("submit-home", {
-    PageTitle: "Home Submitted",
-    cssFile: "submit-home",
-    isLoggedIn: req.isLoggedIn,
-    user: req.session.user
-  });
-
+  try {
+    await home.save();
+    res.redirect('/submit-home');
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
 
 
 // DELETE HOSTEL
-exports.deleteHostel = (req, res) => {
-
+exports.deleteHostel = async (req, res) => {
   const hostelId = req.body.hostelId;
 
-  Home.findByIdAndDelete(hostelId)
-    .then(() => {
-
-      console.log("Hostel Deleted");
-
-      res.redirect("/host/hostels");
-
-    })
-    .catch(err => console.log(err));
+  try {
+    await Home.findByIdAndDelete(hostelId);
+    res.redirect('/host/hostels');
+  } catch (err) {
+    console.log(err);
+    res.status(500).render('404', { 
+      PageTitle: "Error", 
+      isLoggedIn: req.isLoggedIn, 
+      cssFile: '404' 
+    });
+  }
 };
