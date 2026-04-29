@@ -47,6 +47,11 @@ app.use(session({
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
   req.user = req.session.user || null;
+  
+  // Make variables available in all EJS templates
+  res.locals.isLoggedIn = req.isLoggedIn;
+  res.locals.user = req.user;
+
   console.log("Session check middleware:", req.isLoggedIn);
   next();
 });
