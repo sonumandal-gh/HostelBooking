@@ -45,7 +45,6 @@ exports.getHostels = async (req, res) => {
 
 
 // Hostel Detail
-<<<<<<< HEAD
 exports.getHostelsDetails = async (req, res) => {
   try {
     const home = await Home.findById(req.params.hostelsId);
@@ -54,29 +53,15 @@ exports.getHostelsDetails = async (req, res) => {
         PageTitle: "Hostel Not Found",
         isLoggedIn: req.isLoggedIn,
         cssFile: '404'
-=======
-exports.getHostelsDetails = (req, res) => {
-  Home.findById(req.params.hostelsId)
-    .then(home => {
-
-      if (!home) {
-        return res.redirect("/hostels");
-      }
-
-      res.render("store/hostel-detail", {
-        home: home,
-        PageTitle: "Hostel Detail",
-        cssFile: "hostel-detail",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user
->>>>>>> ce6552d4cf8cf125b39604e8b3e1d8fdd39daf62
       });
     }
     res.render('store/hostel-detail', {
       hostels: home,
-      PageTitle: home.homeName,
+      home: home,
+      PageTitle: home.homeName || "Hostel Detail",
       cssFile: 'hostel-detail',
-      isLoggedIn: req.isLoggedIn
+      isLoggedIn: req.isLoggedIn,
+      user: req.session ? req.session.user : null
     });
   } catch (err) {
     console.log(err);
