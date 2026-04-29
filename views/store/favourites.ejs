@@ -1,62 +1,82 @@
 <%- include('../partials/head', { PageTitle, cssFile }) %>
 <body>
-  <%- include('../partials/nav') %>
 
-  <h1 class="page-title">Your Favourite Hostels</h1>
+<%- include('../partials/nav') %>
 
-  <div class="hostels-container">
-    <% if (!favouriteHomes || favouriteHomes.length === 0) { %>
-      <p class="no-favourites">No favourites added yet.</p>
-    <% } else { %>
-      <% favouriteHomes.forEach(home => { %>
-        <div class="hostel-card">
+<h1 class="page-title">Your Favourite Hostels</h1>
 
+<div class="hostels-container">
+
+  <% if (!favouriteHomes || favouriteHomes.length === 0) { %>
+
+    <div class="fav-empty">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+        alt="No favourites"
+        class="fav-icon"
+      >
+      <h2>No Favourite Hostels Yet</h2>
+      <p>You haven't added any hostels to your favourites.</p>
+    </div>
+
+  <% } else { %>
+
+    <% favouriteHomes.forEach(home => { %>
+
+      <div class="hostel-card">
+
+        <!-- IMAGE -->
+        <div class="card-img">
           <img 
-            src="<%= home.image ? home.image : 'https://via.placeholder.com/300x200' %>" 
-            alt="<%= home.name %>" 
-            class="hostel-img"
+            src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+            alt="<%= home.homeName %>"
           >
+        </div>
 
-          <h3 class="hostel-name"><%= home.name %></h3>
+        <!-- INFO -->
+        <div class="card-info">
 
-          <p class="hostel-address">
-            <strong>Address:</strong> <%= home.address %>
+          <h3><%= home.homeName %></h3>
+
+          <p>📍 <%= home.address %></p>
+          <p>🏙 <%= home.city %></p>
+
+          <p class="price">
+            ₹<%= home.price %> / month
           </p>
 
-          <p class="hostel-city">
-            <strong>City:</strong> <%= home.city %>
-          </p>
+        </div>
 
-          <p class="hostel-price">
-            <strong>Price:</strong> ₹<%= home.price %>/night
-          </p>
+        <!-- BUTTONS -->
+        <div class="card-actions">
 
-          <div class="card-buttons">
+          <a href="/hostel-detail/<%= home._id %>" class="btn view">
+            View Details
+          </a>
 
-            <a href="/hostel-detail/<%= home._id %>" class="details-btn">
-              View Details
-            </a>
-          
-            <a href="/hostels/<%= home._id %>" class="book-now-btn">
-              Book Now
-            </a>
-          
-          </div>
-          
+          <a href="/hostel-detail/<%= home._id %>" class="btn book">
+            Book Now
+          </a>
+
           <form action="/favourites/delete/<%= home._id %>" method="POST">
-            <button type="submit" class="delete-btn">
+            <button type="submit" class="btn remove">
               Remove
             </button>
           </form>
 
         </div>
-      <% }) %>
-    <% } %>
-  </div>
 
-  <div style="text-align:center; margin-top:20px;">
-    <a href="/hostels" class="book-btn">Back to Listings</a>
-  </div>
+      </div>
+
+    <% }) %>
+
+  <% } %>
+
+</div>
+
+<div class="back-wrapper">
+  <a href="/hostels" class="back-btn">Back to Listings</a>
+</div>
 
 </body>
 </html>

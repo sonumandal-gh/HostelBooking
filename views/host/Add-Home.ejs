@@ -5,7 +5,7 @@
 
   <div class="form-container glass-panel">
     <h1>Add a New Home</h1>
-    <form action="/submit-home" method="POST">
+    <form action="/submit-home" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="homeName">Home Name:</label>
             <input type="text" id="homeName" name="homeName" placeholder="Enter home name" required>
@@ -27,12 +27,12 @@
         </div>
 
         <div class="form-group">
-            <label for="image">Home Image URL:</label>
-            <input type="text" id="image" name="image" placeholder="Enter image URL" required>
+            <label for="image">Home Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
         </div>
 
         <button type="submit" class="btn-primary" style="width: 100%;">Add Home</button>
     </form>
   </div>
 
-</body>  
+</body>

@@ -38,7 +38,13 @@ exports.getFavouriteList = (req, res) => {
 
     })
     .then(favouriteHomes => {
-      res.status(200).json(favouriteHomes);
+      res.render("store/favourites", {
+        favouriteHomes: favouriteHomes,
+        PageTitle: "My Favourites",
+        cssFile: "favourite",
+        isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user
+      });
     })
     .catch(err => {
       console.log(err);

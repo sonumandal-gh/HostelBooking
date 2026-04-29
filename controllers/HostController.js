@@ -10,16 +10,17 @@ exports.getAddHome = (req, res) => {
   });
 };
 
-
 // GET Host Hostels List
 exports.getHostHostels = async (req, res) => {
   try {
     const registeredHomes = await Home.find();
     res.render('host/host-hostels-list', {
       homes: registeredHomes,
+      registeredHomes: registeredHomes,
       PageTitle: "Your Hostels",
-      cssFile: 'hostels', // reusing hostels.css
-      isLoggedIn: req.isLoggedIn
+      cssFile: 'hostels',
+      isLoggedIn: req.isLoggedIn,
+      user: req.session ? req.session.user : null
     });
   } catch (err) {
     console.log(err);
@@ -31,10 +32,10 @@ exports.getHostHostels = async (req, res) => {
   }
 };
 
-
 // POST Add Home
 exports.postAddHome = async (req, res) => {
-  const { homeName, address, city, price, image } = req.body;
+  const { homeName, address, city, price } = req.body;
+  const image = req.file ? req.file.filename : null; // multer file check
 
   const home = new Home({
     homeName,
@@ -57,10 +58,24 @@ exports.postAddHome = async (req, res) => {
   }
 };
 
+// SUCCESS PAGE
+exports.getSuccess = (req, res) => {
+  res.render("submit-home", {
+    PageTitle: "Home Submitted",
+    cssFile: "submit-home",
+    isLoggedIn: req.isLoggedIn,
+    user: req.session ? req.session.user : null
+  });
+};
 
 // DELETE HOSTEL
 exports.deleteHostel = async (req, res) => {
   const hostelId = req.body.hostelId;
+
+  if (!hostelId) {
+    console.error("No hostelId provided for deletion");
+    return res.status(400).send("Bad Request");
+  }
 
   try {
     await Home.findByIdAndDelete(hostelId);
