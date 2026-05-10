@@ -1,0 +1,38 @@
+<%- include('../partials/head', { PageTitle, cssFile }) %>
+<body>
+  <%- include('../partials/nav') %>
+
+  <h1 class="page-title">
+    My Bookings
+  </h1>
+
+  <div class="hostels-container">
+    <% if(!bookings || bookings.length === 0) { %>
+      <p style="text-align:center;">You haven't booked any hostels yet.</p>
+    <% } else { %>
+      <% bookings.forEach((booking) => { %>
+        <% const home = booking.homeId; %>
+        <% if (home) { %>
+          <div class="hostel-card">
+            <div class="price-tag">₹<%= home.price %>/night</div>
+            <img 
+              src="<%= home.image ? '/uploads/' + home.image : 'https://via.placeholder.com/300x200' %>" 
+              alt="<%= home.homeName %>"
+            >
+
+            <h3><%= home.homeName %></h3>
+
+            <p><strong>Location:</strong> <%= home.address %>, <%= home.city %></p>
+            <p><strong>Date:</strong> <%= booking.bookingDate.toLocaleDateString() %></p>
+            <p><strong>Status:</strong> <span class="status-badge <%= booking.status %>"><%= booking.status %></span></p>
+
+            <div class="card-buttons">
+              <a href="/hostel-detail/<%= home._id %>" class="book-btn">View Details</a>
+            </div>
+          </div>
+        <% } %>
+      <% }) %>
+    <% } %>
+  </div>
+</body>
+</html>
